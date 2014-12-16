@@ -46,8 +46,8 @@ namespace MedicionArmonicosUI
             this.dataAcq = null;
             this.estaMidiendo = false;
             this.ventanaCmbBx.SelectedIndex = 0;        //Por defecto 1 minuto
-            this.tipoArchivoCmbBx.SelectedIndex = 0;    //Binario por defecto
-            this.numeroTarjetasCmbBx.SelectedIndex = 1;
+            this.tipoArchivoCmbBx.SelectedIndex = 0;    //Texto por defecto
+            this.numeroTarjetasCmbBx.SelectedIndex = 0;
             this.diasRegistrosCmbBx.SelectedIndex = 3;
             Thread.CurrentThread.Name = "HiloUI";
             this.frecuenciasTxtBx = new TextBox[4];
@@ -64,9 +64,9 @@ namespace MedicionArmonicosUI
             frecuenciasTxtBx[2] = tarjeta2FrecTxtBx;
             frecuenciasTxtBx[3] = tarjeta3FrecTxtBx;
 
-            //Ya que por defecto habilito 2 tarjetas, deshabilito las opciones
-            //para las otras 2
-            for (int i = 2; i < 4; i++)
+            //Ya que por defecto habilito 1 tarjeta, deshabilito las opciones
+            //para las otras 3
+            for (int i = 1; i < 4; i++)
             {
                 frecuenciasTxtBx[i].Enabled = false;
                 canalesTxtBx[i].Enabled = false;
@@ -462,8 +462,14 @@ namespace MedicionArmonicosUI
             if (medicionContinuaChckBx.Checked)
             {
                 this.ventanaCmbBx.Enabled = false;
+                this.tipoArchivoCmbBx.Enabled = true;
             }
-            else this.ventanaCmbBx.Enabled = true;
+            else
+            {
+                this.ventanaCmbBx.Enabled = true;
+                this.tipoArchivoCmbBx.SelectedIndex = 1;
+                this.tipoArchivoCmbBx.Enabled = false;
+            }
         }
 
         private void label8_Click(object sender, EventArgs e)

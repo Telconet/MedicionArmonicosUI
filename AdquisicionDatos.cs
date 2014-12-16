@@ -126,6 +126,7 @@ namespace MedicionArmonicosUI
             {
                 if (!this.medicionContinua)
                 {
+                    //Medicion por ventana de tiempo.
                     opcionesADC = MccDaq.ScanOptions.BlockIo | MccDaq.ScanOptions.Background;
 
                     //con la frequencia y el tiempo de muestreo, podemos saber cuantas muestras necesitamos
@@ -177,6 +178,7 @@ namespace MedicionArmonicosUI
                 }
                 else
                 {
+                    //Medicion continua...
                     this.ventanaMuestreo = 60;
                     opcionesADC = MccDaq.ScanOptions.Background | MccDaq.ScanOptions.Continuous;   //MccDaq.ScanOptions.BlockIo |
 

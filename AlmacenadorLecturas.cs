@@ -121,17 +121,17 @@ namespace MedicionArmonicosUI
 
             if (!medicionContinua)
             {
-                this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturas);
+                this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturasTexto);
             }
             else
             {
                 if (this.tipoArchivo == Form1.TipoArchivo.Texto)
                 {
-                    this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturasContinuas);
+                    this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturasContinuasTexto);
                 }
                 else if (this.tipoArchivo == Form1.TipoArchivo.Binario)
                 {
-                    this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturasContinuasArchivoBinario);
+                    this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturasContinuasBinario);
                 }
             }
 
@@ -262,9 +262,9 @@ namespace MedicionArmonicosUI
         }
 
         /**
-         * Para almacenamiento continuo de lecturas
+         * Para almacenamiento continuo de lecturas (archivo de texto).
          */
-        private void procesarAlmacenarLecturasContinuas(object parameter)
+        private void procesarAlmacenarLecturasContinuasTexto(object parameter)
         {
    
             while (true)
@@ -476,9 +476,9 @@ namespace MedicionArmonicosUI
         }
 
         /**
-        * Para almacenamiento continuo de lecturas
+        * Para almacenamiento continuo de lecturas (archivo binario)
         */
-        private void procesarAlmacenarLecturasContinuasArchivoBinario(object parameter)
+        private void procesarAlmacenarLecturasContinuasBinario(object parameter)
         {
 
             while (true)
@@ -701,7 +701,7 @@ namespace MedicionArmonicosUI
         /**
          * Este procesamiento lo realizamos en segundo plano, para evitar que el DAQ espere.
          */
-        private void procesarAlmacenarLecturas(object parameter)
+        private void procesarAlmacenarLecturasTexto(object parameter)
         {
             
             //TODO: sacar lecturas de la cola
