@@ -1,0 +1,10 @@
+﻿Bitacora de cambios
+*******************
+
+[1.0.1]
+
+- Correccion de verificacion de numero de canales
+
+[1.0]
+
+- Version inicial del programa
