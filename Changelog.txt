@@ -4,6 +4,7 @@
 [1.0.1]
 
 - Correccion de verificacion de numero de canales
+- Se añadió la opción de horas de medicion para archivos de texto
 
 [1.0]
 

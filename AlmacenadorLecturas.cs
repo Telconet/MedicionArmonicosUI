@@ -415,15 +415,24 @@ namespace MedicionArmonicosUI
 
                                 if (horaMedicion)
                                 {
-                                    archivoSalida.WriteLine(fechaHoraInicio.ToString("HH:mm:ss.fffffff") + "," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat));
-                                    
-                                    if (canal == numeroCanales - 1)
-                                    {
-                                        archivoSalida.WriteLine(fechaHoraInicio.ToString("HH:mm:ss.fffffff") + "," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                   
+                                    if(canal == 0){
+                                        archivoSalida.Write(fechaHoraInicio.ToString("HH:mm:ss.fffff,") + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
                                     }
-                                    else archivoSalida.WriteLine(fechaHoraInicio.ToString("HH:mm:ss.fffffff") + "," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
-
-                                    fechaHoraInicio.Add(new TimeSpan(ticksInt));
+                                    else if (canal == numeroCanales - 1)
+                                    {
+                                        //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
+                                        archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
+                                        
+                                        fechaHoraInicio = fechaHoraInicio.Add(new TimeSpan(ticksInt));
+                                        //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
+                                    }
+                                    else
+                                    {
+                                        //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + ", ");
+                                        archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
+                                    }
                                 }
                                 else
                                 {
@@ -527,9 +536,10 @@ namespace MedicionArmonicosUI
 
                     short[] datosADC = lecturasLocal.lecturasArr;
 
+                    //Un tick son 100 ns...
                     float ticks = (1.0f / ((float)frecuencia)) * 1000000000.0f / 100.0f;             //Ticks por muestra
-                    int ticksInt = (int)ticks;
-                    int ticksTotalesInt = ticksInt * datosADC.Length;                                //restamos los ticks para saber el tiempo de la primera lectura
+                    long ticksInt = (long)ticks;                                                     //ticks por muestra (eg 2000 Hz -> 5000 ticks
+                    long ticksTotalesInt = ticksInt * datosADC.Length;                                //restamos los ticks para saber el tiempo de la primera lectura
 
                     DateTime fechaHoraInicio = lecturasLocal.fechaInicioMediciones.Subtract(new TimeSpan(ticksTotalesInt));
                     long tamañoArchivo = frecuencia * numeroCanales;      //tamano de archivo
@@ -636,15 +646,21 @@ namespace MedicionArmonicosUI
 
                                 if (horaMedicion)
                                 {
-                                    this.archivoSalida.escribir(fechaHoraInicio.ToString("HH:mm:ss.fffffff") + "," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat));
+
+                                    //TODO!!
+
+                                    /*this.archivoSalida.escribir(fechaHoraInicio.ToString("HH:mm:ss.fffffff") + "," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat));
 
                                     if (canal == numeroCanales - 1)
                                     {
-                                        this.archivoSalida.escribir(fechaHoraInicio.ToString("HH:mm:ss.fffffff") + "," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        this.archivoSalida.escribir("," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
-                                    else archivoSalida.escribir(fechaHoraInicio.ToString("HH:mm:ss.fffffff") + "," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
-
-                                    fechaHoraInicio.Add(new TimeSpan(ticksInt));
+                                    else
+                                    {
+                                        archivoSalida.escribir("," + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        fechaHoraInicio.Add(new TimeSpan(ticksInt)); 
+                                    }*/
+                                    
                                 }
                                 else
                                 {
@@ -661,7 +677,7 @@ namespace MedicionArmonicosUI
                                         //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
 
-                                    fechaHoraInicio.Add(new TimeSpan(ticksInt));
+                                    //fechaHoraInicio.Add(new TimeSpan(ticksInt));
                                 }
 
                                 //archivoSalida.Flush();      //---> Error por fragmentacion????
@@ -703,7 +719,7 @@ namespace MedicionArmonicosUI
             }
         }
         /**
-         * Este procesamiento lo realizamos en segundo plano, para evitar que el DAQ espere.
+         * Este procesamiento lo realizamos en segundo plano, para evitar que el DAQ espere. (ventana?)
          */
         private void procesarAlmacenarLecturasTexto(object parameter)
         {

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.opcionesMuestreo = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tipoArchivoCmbBx = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.diasRegistrosCmbBx = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -67,8 +69,6 @@
             this.tarjeta1CanalTxtBx = new System.Windows.Forms.TextBox();
             this.tarjeta2CanalTxtBx = new System.Windows.Forms.TextBox();
             this.tarjeta3CanalTxtBx = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tipoArchivoCmbBx = new System.Windows.Forms.ComboBox();
             this.opcionesMuestreo.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -77,9 +77,9 @@
             // 
             // opcionesMuestreo
             // 
-            this.opcionesMuestreo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.opcionesMuestreo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.opcionesMuestreo.Controls.Add(this.label2);
             this.opcionesMuestreo.Controls.Add(this.tipoArchivoCmbBx);
             this.opcionesMuestreo.Controls.Add(this.label1);
@@ -104,6 +104,26 @@
             this.opcionesMuestreo.TabStop = false;
             this.opcionesMuestreo.Text = "Opciones Generales de Muestreo";
             this.opcionesMuestreo.Enter += new System.EventHandler(this.opcionesMuestreo_Enter);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(71, 177);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(81, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Tipo de archivo";
+            // 
+            // tipoArchivoCmbBx
+            // 
+            this.tipoArchivoCmbBx.FormattingEnabled = true;
+            this.tipoArchivoCmbBx.Items.AddRange(new object[] {
+            "Binario",
+            "Texto"});
+            this.tipoArchivoCmbBx.Location = new System.Drawing.Point(158, 173);
+            this.tipoArchivoCmbBx.Name = "tipoArchivoCmbBx";
+            this.tipoArchivoCmbBx.Size = new System.Drawing.Size(121, 21);
+            this.tipoArchivoCmbBx.TabIndex = 22;
             // 
             // label1
             // 
@@ -229,13 +249,13 @@
             // tiempoMedicionChckBx
             // 
             this.tiempoMedicionChckBx.AutoSize = true;
-            this.tiempoMedicionChckBx.Enabled = false;
             this.tiempoMedicionChckBx.Location = new System.Drawing.Point(157, 236);
             this.tiempoMedicionChckBx.Name = "tiempoMedicionChckBx";
             this.tiempoMedicionChckBx.Size = new System.Drawing.Size(182, 17);
             this.tiempoMedicionChckBx.TabIndex = 9;
             this.tiempoMedicionChckBx.Text = "¿Almacenar tiempo de medición?";
             this.tiempoMedicionChckBx.UseVisualStyleBackColor = true;
+            this.tiempoMedicionChckBx.CheckedChanged += new System.EventHandler(this.tiempoMedicionChckBx_CheckedChanged);
             // 
             // button2
             // 
@@ -320,9 +340,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Controls.Add(this.iniciarMuestroBttn);
             this.groupBox1.Location = new System.Drawing.Point(408, 29);
@@ -490,26 +510,6 @@
             this.tarjeta3CanalTxtBx.Name = "tarjeta3CanalTxtBx";
             this.tarjeta3CanalTxtBx.Size = new System.Drawing.Size(116, 20);
             this.tarjeta3CanalTxtBx.TabIndex = 13;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(71, 177);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Tipo de archivo";
-            // 
-            // tipoArchivoCmbBx
-            // 
-            this.tipoArchivoCmbBx.FormattingEnabled = true;
-            this.tipoArchivoCmbBx.Items.AddRange(new object[] {
-            "Binario",
-            "Texto"});
-            this.tipoArchivoCmbBx.Location = new System.Drawing.Point(158, 173);
-            this.tipoArchivoCmbBx.Name = "tipoArchivoCmbBx";
-            this.tipoArchivoCmbBx.Size = new System.Drawing.Size(121, 21);
-            this.tipoArchivoCmbBx.TabIndex = 22;
             // 
             // Form1
             // 

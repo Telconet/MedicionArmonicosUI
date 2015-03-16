@@ -187,6 +187,13 @@ namespace MedicionArmonicosUI
                 float divisorVoltaje, vueltasTrasformador;
                 String ruta = null;
 
+                //No permitimos añadir fecha con archivos binarios...
+                if (this.tiempoMedicionChckBx.Checked && this.tipoArchivoCmbBx.SelectedIndex == 0)
+                {
+                    MessageBox.Show("No se puede almacenar datos en archivo binario con fechas. Por favor seleccione tipo de archivo Texto o deshabilite la opcion de hora de medicion.", "Error de opciones.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 
                 //Ruta
                 if (this.rutaArchivoTxtBox.Text.Trim() == String.Empty)
@@ -417,6 +424,7 @@ namespace MedicionArmonicosUI
                 if (dataAcq != null)
                 {
                     this.dataAcq.detenerMedicion();
+                    //TODO... Hilo de UI debe esperar a que los otros hilos terminen!!!
                 }
                 
                 //TODO esperar que threads terminen
@@ -535,6 +543,11 @@ namespace MedicionArmonicosUI
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void tiempoMedicionChckBx_CheckedChanged(object sender, EventArgs e)
+        {
+           
         }
 
     }
