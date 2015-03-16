@@ -92,6 +92,10 @@ namespace MedicionArmonicosUI
                                              config.obtenerParametro(Configuracion.Parametro.clave_bd));*/
         }
 
+        /**
+         * 
+         * 
+         */
         public void finalizarAlmacenamiento()
         {
             this.finalizar = true;

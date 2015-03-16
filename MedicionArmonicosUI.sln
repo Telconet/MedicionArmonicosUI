@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicionArmonicosUI", "MedicionArmonicosUI.csproj", "{DC21C8A7-89FB-44CE-A24B-0A34835D7673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchivosBinarios", "ArchivosBinarios\ArchivosBinarios\ArchivosBinarios.csproj", "{E4652419-E9E9-4985-9350-BEF0F3CE3498}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchivosBinarios", "..\ArchivosBinarios\ArchivosBinarios\ArchivosBinarios.csproj", "{E4652419-E9E9-4985-9350-BEF0F3CE3498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

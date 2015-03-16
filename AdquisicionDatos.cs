@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Diagnostics;
 
 
+
 namespace MedicionArmonicosUI
 {
     class AdquisicionDatos
@@ -34,7 +35,7 @@ namespace MedicionArmonicosUI
         private float divisorVoltaje;
         private float vueltasTransformador;
         private Form1.TipoArchivo tipoArchivo;
-
+        private Thread hiloAdquisicion;
 
         //Para revision continua
         private int numeroTarjetas;
@@ -84,7 +85,7 @@ namespace MedicionArmonicosUI
          */
         public int iniciarAdquisicionDatos()
         {
-            Thread hiloAdquisicion = new Thread(new ThreadStart(iniciarAdquisicionDatosFn));
+            this.hiloAdquisicion = new Thread(new ThreadStart(iniciarAdquisicionDatosFn));
            
             hiloAdquisicion.Start();
 
@@ -228,8 +229,10 @@ namespace MedicionArmonicosUI
                     for (int i = 0; i < numeroTarjetas; i++)
                     {
 #if !DEBUG
+                        Console.Out.WriteLine("Iniciando muestreo...");
                         MccDaq.ErrorInfo ulstat2 = tarjeta[i].AInScan(canalInferior[i], canalSuperior[i], numeroMuestras[i], ref tasaMuestreoLocal[i], rangoMuestreo, this.handleADC[i], opcionesADC);
 #endif
+                        
                         temporizador[i].Start();
                     }
                 }     
@@ -461,6 +464,8 @@ namespace MedicionArmonicosUI
                     }
                 }
             }
+
+            //this.hiloAdquisicion.Join();            //Esperar que termine
         }
 
     }

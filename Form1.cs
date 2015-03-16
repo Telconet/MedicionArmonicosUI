@@ -164,6 +164,8 @@ namespace MedicionArmonicosUI
             this.folderBrowserDialog1.ShowDialog();
             this.rutaArchivoTxtBox.Text = folderBrowserDialog1.SelectedPath;
             this.directorio = rutaArchivoTxtBox.Text;
+
+            //TODO VERIFICAR QUE EXISTE!!
         }
 
         private void rutaArchivoTxtBox_TextChanged(object sender, EventArgs e)
@@ -354,6 +356,13 @@ namespace MedicionArmonicosUI
                         if (int.TryParse(canalesTxtBx[i].Text.Trim(), out canalesSuperiores[i]))
                         {
                             canalesSuperiores[i] = int.Parse(canalesTxtBx[i].Text.Trim(), CultureInfo.InvariantCulture.NumberFormat);
+
+                            if (canalesSuperiores[i] > 7)
+                            {
+                                MessageBox.Show("Por favor ingrese un numero de canal menor o igual a 7.", "Número de canal invalido.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+
+                            }
                         }
                         else
                         {
@@ -411,7 +420,8 @@ namespace MedicionArmonicosUI
                 }
                 
                 //TODO esperar que threads terminen
-                this.iniciarMuestroBttn.Text = "Iniciar muestrreo";
+                Console.Out.WriteLine("Muestreo detenido");
+                this.iniciarMuestroBttn.Text = "Iniciar muestreo";
                 this.iniciarMuestroBttn.Enabled = true;
                 this.diasRegistrosCmbBx.Enabled = true;
             }
