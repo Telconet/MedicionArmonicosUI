@@ -350,7 +350,7 @@ namespace MedicionArmonicosUI
                                 archivoSalida = new StreamWriter(ruta + nombreArchivo, true);    //Si archivo no existe, es creado.
                                 String fecha = fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss");
                                 //archivoSalida.WriteLine("Fecha de inicio de medicion: " + fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss.fffffff ") + ", Frecuencia de muestreo: " + frecuencia + " Hz.");
-                                archivoSalida.WriteLine("Fecha, Hora, Voltaje A, Voltaje B, Voltaje C, Neutro");
+                                archivoSalida.WriteLine("Fecha; Hora; Voltaje A; Voltaje B; Voltaje C; Neutro");
                                 archivoSalida.Flush();
                             }
                             else
@@ -427,19 +427,19 @@ namespace MedicionArmonicosUI
                                 {
                                    
                                     if(canal == 0){
-                                        archivoSalida.Write(fechaHoraInicio.ToString("yyyy-MM-dd,HH:mm:ss.ffff,") + voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        archivoSalida.Write(fechaHoraInicio.ToString("yyyy-MM-dd;HH:mm:ss,ffff;") + voltaje.ToString("0.0", CultureInfo.CurrentCulture.NumberFormat) + ";");          //CultureInfo.InvariantCulture.NumberFormat
                                     }
                                     else if (canal == numeroCanales - 1)
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
-                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");         //0.000 originalmente
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.CurrentCulture.NumberFormat) + "\r\n");         //0.000 originalmente
                                         
                                         fechaHoraInicio = fechaHoraInicio.Add(new TimeSpan(ticksInt));
                                     }
                                     else
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + ", ");
-                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.CurrentCulture.NumberFormat) + ";");
                                         //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
                                 }
@@ -448,13 +448,13 @@ namespace MedicionArmonicosUI
                                     if (canal == numeroCanales - 1)
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
-                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.CurrentCulture.NumberFormat) + "\r\n");
                                         //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
                                     else
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + ", ");
-                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.CurrentCulture.NumberFormat) + ";");
                                         //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
                                     

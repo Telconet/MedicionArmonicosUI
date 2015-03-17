@@ -5,6 +5,7 @@
 
 - Correccion de formato de voltaje
 - Cambio de encabezados
+- Se cambio formato de voltajes (, para decimales ; separador de columna)
 
 [1.0.1]
 
