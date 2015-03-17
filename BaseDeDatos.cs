@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * 
+ * @author Eduardo Murillo
+ * © Telconet 2015
+ * 
+ */
+
+using System;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;

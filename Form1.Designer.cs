@@ -176,6 +176,9 @@
             // medicionContinuaChckBx
             // 
             this.medicionContinuaChckBx.AutoSize = true;
+            this.medicionContinuaChckBx.Checked = true;
+            this.medicionContinuaChckBx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.medicionContinuaChckBx.Enabled = false;
             this.medicionContinuaChckBx.Location = new System.Drawing.Point(156, 259);
             this.medicionContinuaChckBx.Name = "medicionContinuaChckBx";
             this.medicionContinuaChckBx.Size = new System.Drawing.Size(137, 17);
@@ -224,6 +227,7 @@
             // 
             // ventanaCmbBx
             // 
+            this.ventanaCmbBx.Enabled = false;
             this.ventanaCmbBx.FormattingEnabled = true;
             this.ventanaCmbBx.Items.AddRange(new object[] {
             "1 minuto",
@@ -249,6 +253,8 @@
             // tiempoMedicionChckBx
             // 
             this.tiempoMedicionChckBx.AutoSize = true;
+            this.tiempoMedicionChckBx.Checked = true;
+            this.tiempoMedicionChckBx.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tiempoMedicionChckBx.Location = new System.Drawing.Point(157, 236);
             this.tiempoMedicionChckBx.Name = "tiempoMedicionChckBx";
             this.tiempoMedicionChckBx.Size = new System.Drawing.Size(182, 17);
@@ -454,6 +460,7 @@
             this.tarjeta0FrecTxtBx.Name = "tarjeta0FrecTxtBx";
             this.tarjeta0FrecTxtBx.Size = new System.Drawing.Size(117, 20);
             this.tarjeta0FrecTxtBx.TabIndex = 6;
+            this.tarjeta0FrecTxtBx.Text = "2000";
             // 
             // tarjeta1FrecTxtBx
             // 
@@ -486,6 +493,7 @@
             this.tarjeta0CanalTxtBx.Name = "tarjeta0CanalTxtBx";
             this.tarjeta0CanalTxtBx.Size = new System.Drawing.Size(116, 20);
             this.tarjeta0CanalTxtBx.TabIndex = 10;
+            this.tarjeta0CanalTxtBx.Text = "3";
             // 
             // tarjeta1CanalTxtBx
             // 

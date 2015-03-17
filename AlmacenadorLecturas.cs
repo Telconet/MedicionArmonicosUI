@@ -1,4 +1,11 @@
-﻿//#define DEBUG
+﻿/**
+ * 
+ * @author Eduardo Murillo
+ * © Telconet 2015
+ * 
+ */
+
+//#define DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +16,8 @@ using System.Globalization;
 using System.Diagnostics;
 using System.IO;
 using ArchivosBinarios;
+
+
 
 namespace MedicionArmonicosUI
 {
@@ -86,10 +95,6 @@ namespace MedicionArmonicosUI
             this.subfijo = subfijo;
             this.tipoArchivo = tipoArchivo;
             this.archivoSalida = null;
-            /*this.bd = new BaseDeDatos(config.obtenerParametro(Configuracion.Parametro.ip_bd),
-                                             config.obtenerParametro(Configuracion.Parametro.nombre_bd),
-                                             config.obtenerParametro(Configuracion.Parametro.usuario_bd),
-                                             config.obtenerParametro(Configuracion.Parametro.clave_bd));*/
         }
 
         /**
@@ -125,7 +130,7 @@ namespace MedicionArmonicosUI
 
             if (!medicionContinua)
             {
-                this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturasTexto);
+                this.tProcesamientoLecturas = new Thread(this.procesarAlmacenarLecturasTextoVentana);
             }
             else
             {
@@ -152,7 +157,7 @@ namespace MedicionArmonicosUI
 
        
         /**
-         * Almacena las lecturas en archivos de texto 
+         * Almacena las lecturas en archivos de texto ??
          */
         public void almacenarLecturasTexto(Thread idThread, lectura[,] lecturasADC, String ruta, int frecuenciaMuestreo, int periodosDia ,bool horaMedicion)
         {
@@ -235,6 +240,7 @@ namespace MedicionArmonicosUI
                                                                                             //medicion por ventanas.
             lock(colaLecturas)
             {
+                
                 this.colaLecturas.Enqueue(med); 
             }
             //cronometro.Stop();
@@ -270,6 +276,7 @@ namespace MedicionArmonicosUI
          */
         private void procesarAlmacenarLecturasContinuasTexto(object parameter)
         {
+            Console.WriteLine("what");
    
             while (true)
             {
@@ -295,7 +302,7 @@ namespace MedicionArmonicosUI
                 
 
                if (lecturasLocal != null)
-                {
+               {
                     MccDaq.MccBoard tarjeta = ((ArgumentoProcesamientoLecturas)parameter).tarjeta;
                     MccDaq.Range rangoADC = ((ArgumentoProcesamientoLecturas)parameter).rango;
                     Thread idThread = ((ArgumentoProcesamientoLecturas)parameter).idThread;
@@ -339,13 +346,16 @@ namespace MedicionArmonicosUI
                             //verificar si existe el archivo
                             if (!File.Exists(ruta + nombreArchivo))
                             {
+                                //Console.WriteLine("Archivo " + ruta + nombreArchivo + " no existe, creandolo..."); 
                                 archivoSalida = new StreamWriter(ruta + nombreArchivo, true);    //Si archivo no existe, es creado.
                                 String fecha = fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss");
-                                archivoSalida.WriteLine("Fecha de inicio de medicion: " + fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss.fffffff ") + ", Frecuencia de muestreo: " + frecuencia + " Hz.");
+                                //archivoSalida.WriteLine("Fecha de inicio de medicion: " + fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss.fffffff ") + ", Frecuencia de muestreo: " + frecuencia + " Hz.");
+                                archivoSalida.WriteLine("Fecha, Hora, Voltaje A, Voltaje B, Voltaje C, Neutro");
                                 archivoSalida.Flush();
                             }
                             else
                             {
+                                //Console.WriteLine("Archivo " + ruta + nombreArchivo + " existe, abriendolo...");
                                 archivoSalida = new StreamWriter(ruta + nombreArchivo, true);    //Caso contrario abrimos el archivo
                             }
 
@@ -417,20 +427,19 @@ namespace MedicionArmonicosUI
                                 {
                                    
                                     if(canal == 0){
-                                        archivoSalida.Write(fechaHoraInicio.ToString("HH:mm:ss.fffff,") + voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        archivoSalida.Write(fechaHoraInicio.ToString("yyyy-MM-dd,HH:mm:ss.ffff,") + voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + ",");
                                     }
                                     else if (canal == numeroCanales - 1)
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
-                                        archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");         //0.000 originalmente
                                         
                                         fechaHoraInicio = fechaHoraInicio.Add(new TimeSpan(ticksInt));
-                                        //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
                                     else
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + ", ");
-                                        archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + ",");
                                         //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
                                 }
@@ -439,13 +448,13 @@ namespace MedicionArmonicosUI
                                     if (canal == numeroCanales - 1)
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
-                                        archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                         //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
                                     else
                                     {
                                         //archivoSalida.Write("canal " + canal.ToString() + ": " + voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + ", ");
-                                        archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + ",");
+                                        archivoSalida.Write(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat) + ",");
                                         //archivoSalida.Write(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat) + "\r\n");
                                     }
                                     
@@ -485,6 +494,10 @@ namespace MedicionArmonicosUI
                         }
                     }
                 }
+               else
+               {
+                   //Console.WriteLine("Lecturas local es null");
+               }
             }
         }
 
@@ -570,12 +583,13 @@ namespace MedicionArmonicosUI
                                 this.archivoSalida = new LectorEscritorArchivoBinario(ruta + nombreArchivo);
                                 this.archivoSalida.abrirArchivo(FileMode.Append, tamañoArchivo);                                //Si archivo no existe, es creado.
                                 String fecha = fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss");
-                                this.archivoSalida.escribir("Fecha de inicio de medicion: " + fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss.fffffff ") + ", Frecuencia de muestreo: " + frecuencia + " Hz.");
-                                //archivoSalida.Flush();
+                                this.archivoSalida.escribir("Fecha, Hora, Voltaje A, Voltaje B, Voltaje C, Neutro");
+                                //"Fecha de inicio de medicion: " + fechaHoraInicio.ToString("yyyy-MM-dd HH:mm:ss.fffffff ") + ", Frecuencia de muestreo: " + frecuencia + " Hz."
+                                archivoSalida.Flush();
                             }
-                            //Si ya existe, ya esta abierto...
                             /*else
                             {
+                             * //Si ya existe, ya esta abierto...
                                 this.archivoSalida = new LectorEscritorArchivoBinario(ruta + nombreArchivo);    //Caso contrario abrimos el archivo
                                 this.archivoSalida.abrirArchivo(FileMode.Append);
                             }*/
@@ -721,7 +735,7 @@ namespace MedicionArmonicosUI
         /**
          * Este procesamiento lo realizamos en segundo plano, para evitar que el DAQ espere. (ventana?)
          */
-        private void procesarAlmacenarLecturasTexto(object parameter)
+        private void procesarAlmacenarLecturasTextoVentana(object parameter)
         {
             
             //TODO: sacar lecturas de la cola
@@ -859,7 +873,7 @@ namespace MedicionArmonicosUI
                                 }
                                 else
                                 {
-                                    archivosSalida[canal].WriteLine(voltaje.ToString("0.000", CultureInfo.InvariantCulture.NumberFormat));
+                                    archivosSalida[canal].WriteLine(voltaje.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat));
                                     //archivosSalida[canal].WriteLine(voltaje.ToString(CultureInfo.InvariantCulture.NumberFormat) + "," + voltaje_calculado.ToString(CultureInfo.InvariantCulture.NumberFormat) + "," + ((voltaje_calculado - voltaje).ToString(CultureInfo.InvariantCulture.NumberFormat)) + "," + datosADC[indiceLectura].ToString());
                                 }
 

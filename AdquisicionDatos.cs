@@ -1,5 +1,10 @@
-﻿//Para correrlo en una PC sin tarjeta de adquisicion de datos (e.g. laptop)
-//#define DEBUG                       
+﻿/**
+ * 
+ * @author Eduardo Murillo
+ * © Telconet 2015
+ * 
+ */
+
 
 using System;
 using System.Collections.Generic;
@@ -231,8 +236,8 @@ namespace MedicionArmonicosUI
 #if !DEBUG
                         Console.Out.WriteLine("Iniciando muestreo...");
                         MccDaq.ErrorInfo ulstat2 = tarjeta[i].AInScan(canalInferior[i], canalSuperior[i], numeroMuestras[i], ref tasaMuestreoLocal[i], rangoMuestreo, this.handleADC[i], opcionesADC);
+                        Console.WriteLine("Tarjeta de adquisicion de datos: " + ulstat2.Message);
 #endif
-                        
                         temporizador[i].Start();
                     }
                 }     
@@ -287,6 +292,7 @@ namespace MedicionArmonicosUI
 #if !DEBUG
             //Obtenemos el status...
             MccDaq.ErrorInfo stat = tarjeta[id].GetStatus(out status[id], out cantidadActual[id], out indiceActual[id], MccDaq.FunctionType.AiFunction);
+            //Console.WriteLine("Temporizador. status tarjeta: " + stat.Message + " stats[id] = " + status[id] );
 #endif
             //MccDaq.ErrorInfo error2 = tarjeta[id].StopBackground(MccDaq.FunctionType.AiFunction);        //borrar
             DateTime fecha = DateTime.Now;
@@ -307,6 +313,7 @@ namespace MedicionArmonicosUI
 #if !DEBUG
             if (!iniciado)
             {
+                Console.WriteLine("!iniciado");
 
                 MccDaq.ErrorInfo error = tarjeta[id].StopBackground(MccDaq.FunctionType.AiFunction);
 
@@ -320,10 +327,13 @@ namespace MedicionArmonicosUI
             //Revisamos mientras este tomando muestras
             if (status[id] == 1)
             {
+                //Console.WriteLine("status[id] = 1, indiceActual[id] = " + indiceActual[id] + ",  cantidadActual[id] = " + cantidadActual[id]);
                 if (indiceActual[id] != -1)          //Si hubo transferencia de datos.
                 {
+                    //Console.WriteLine("indiceActual[id] != -1");
                     if (indiceActual[id] > indiceAnterior[id])
                     {
+                        //Console.WriteLine("indiceActual[id] > indiceAnterior[id]");
                         //si el indice actual es MAYOR que la ultima vez que revisamos
                         //todavia no damos vuelta en el buffer, es decir, no se han
                         //sobre escrito las muestras
@@ -333,6 +343,7 @@ namespace MedicionArmonicosUI
                         //MccDaq.ErrorInfo error = tarjeta[id].StopBackground(MccDaq.FunctionType.AiFunction);
                         //Pasamos los datos a un arreglo
                         MccDaq.ErrorInfo stat2 = MccDaq.MccService.WinBufToArray(handleADC[id], datosADC, indiceAnterior[id], numeroMuestrasObtenidas);
+                        //Console.WriteLine("Temporizador. WinBufToArray tarjeta: " + stat2.Message);
 
                         int numeroCanales = canalSuperior[id] - canalInferior[id] + 1;
 
@@ -345,6 +356,7 @@ namespace MedicionArmonicosUI
 
                         if (canalInicial[id] >= numeroCanales)
                         {
+                            //Console.WriteLine("canalInicial[id] >= numeroCanales");
                             canalInicial[id] = canalInicial[id] % numeroCanales;
                         }
 
@@ -358,6 +370,7 @@ namespace MedicionArmonicosUI
                     else if (indiceActual[id] < indiceAnterior[id])
                     {
                         //System.Console.WriteLine("Se dio vuelta al buffer");
+                        //Console.WriteLine("indiceActual[id] < indiceAnterior[id]");
 
                         //en este caso, ya le dimos la vuelta al buffer
                         // el tamaño es igual al tamaño total - indice anterior (lo que sobre del buffer) + lo que avanzamos desde 0;
@@ -371,8 +384,10 @@ namespace MedicionArmonicosUI
 
                         //Pasamos los datos a un arreglo (la primera parte)
                         MccDaq.ErrorInfo stat2 = MccDaq.MccService.WinBufToArray(handleADC[id], datosADC, indiceAnterior[id], numeroMuestrasObtenidas1);
+                        //Console.WriteLine("Temporizador. WinBufToArray3 tarjeta: " + stat2.Message);
 
-                        this.almacenador[id].recibirLecturas(ref datosADC, fecha, canalInicial[id]);
+
+                        this.almacenador[id].recibirLecturas(ref datosADC, fecha, canalInicial[id]);   //<-----
 
                         //
                         canalInicial[id] = canalInicial[id] + (numeroMuestrasObtenidas1 % numeroCanales);
@@ -389,7 +404,7 @@ namespace MedicionArmonicosUI
                         int ticksInt = (int)ticks;                               //Se puede perder precisión si frecuencia no es even. 
                         fecha.Add(new TimeSpan(ticksInt));                      //Calculamos la fecha inicial de la primera medicion de este pedazo.
 
-                        this.almacenador[id].recibirLecturas(ref datosADC, fecha, canalInicial[id]);
+                        this.almacenador[id].recibirLecturas(ref datosADC, fecha, canalInicial[id]);            //<-----
 
                         //Calculamos el njumero de canal a almacenar  para la siguiente revision.
                         canalInicial[id] = canalInicial[id] + (numeroMuestrasObtenidas1 % numeroCanales);

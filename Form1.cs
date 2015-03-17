@@ -1,4 +1,12 @@
-﻿//#define DEBUG
+﻿/**
+ * 
+ * @author Eduardo Murillo
+ * © Telconet 2015
+ * 
+ */
+
+
+//#define DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -46,7 +54,7 @@ namespace MedicionArmonicosUI
             this.dataAcq = null;
             this.estaMidiendo = false;
             this.ventanaCmbBx.SelectedIndex = 0;        //Por defecto 1 minuto
-            this.tipoArchivoCmbBx.SelectedIndex = 0;    //Texto por defecto
+            this.tipoArchivoCmbBx.SelectedIndex = 1;    //Texto por defecto
             this.numeroTarjetasCmbBx.SelectedIndex = 0;
             this.diasRegistrosCmbBx.SelectedIndex = 3;
             Thread.CurrentThread.Name = "HiloUI";

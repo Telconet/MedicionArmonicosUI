@@ -1,6 +1,11 @@
 ﻿Bitacora de cambios
 *******************
 
+[1.0.2]
+
+- Correccion de formato de voltaje
+- Cambio de encabezados
+
 [1.0.1]
 
 - Correccion de verificacion de numero de canales
